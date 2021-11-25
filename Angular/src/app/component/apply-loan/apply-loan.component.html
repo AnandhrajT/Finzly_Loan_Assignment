@@ -1,0 +1,108 @@
+<div class="Application">
+  <div class="col-lg-10" id="applyloan">
+    <h1 class="text-center">Loan Application</h1>
+
+    <form [formGroup]="loanForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label>Customer ID:</label>
+            <input type="text" formControlName="customerId" class="form-control" />
+          </div>
+        </div> 
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label>Loan Amount:</label>
+            <input type="number" (keypress)="keyPressNumbers($event)" formControlName="loanAmount" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && function.loanAmount.errors }" />
+          </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label>Loan Date:</label>
+            <input type="date" formControlName="loanDate" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && function.loanDate.errors }"/>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label>Start Date:</label>
+            <input type="date" formControlName="startDate" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && function.startDate.errors }"/>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <label>Loan Duration in Years:</label>
+          <div class="form-group">
+            <input type="number" name="loanDuration" id="loanDurationInputId" class="form-control"
+              formControlName="loanDuration" value="0" min="0" oninput="loanDurationInputId.value" (change)="setEndDate($event)"
+              [ngClass]="{ 'is-invalid': submitted && function.loanDuration.errors }"/>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label>End Date:</label>
+            <input type="date" formControlName="endDate" class="form-control" />
+          </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label>Rate Of Interest(in %):</label>
+            <input type="number" formControlName="rateOfInterest"
+              class="form-control"/>
+          </div>
+        </div> 
+
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label class="form-label">Payment Intervel</label>
+            <select class="form-select" (change)="calculateEmiPayments($event)" placeholder="Select Type of Loan" required>
+              <option value="Monthly" >Monthly</option>
+              <option value="Half Year" >Half Year</option>
+              <option value="One Year" >One Year</option>
+            </select>
+            <div *ngIf="submitted && function.paymentInterval.errors" class="invalid-feedback">
+              <div *ngIf="function.paymentInterval.errors.required">Payment Intervel is required</div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label>Payment Schedule:</label>
+            <input  formControlName="payments"
+              class="form-control" />
+          </div>
+        </div> 
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label class="form-label">Payment Term</label>
+            <select class="form-select" (change)="calculateInterestExtimate($event)" placeholder="Select Type of Loan" required>
+              <option value="Interest Only" >Interest Only</option>
+              <option value="Even Principal" >Even Principal</option>
+            </select>
+          </div>
+        </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <label class="form-label">Interest Extimate</label>
+            <input type="number" formControlName="interestExtimate"
+              class="form-control"/>
+          </div>
+        </div>
+      <div class="row" id="button">
+        <div class="col-md-6 float-right form-group">
+          <button class="btn btn-outline-success btn-lg ">Submit</button>
+        </div>
+        </div>
+        </form>
+      </div>
+  </div>

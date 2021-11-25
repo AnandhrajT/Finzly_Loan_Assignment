@@ -1,0 +1,31 @@
+<div class="card m-3">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Payment ID</th>
+            <th scope="col">Payment Date</th>
+            <th scope="col">Principal Amount</th>
+            <th scope="col">Projected Interest</th>
+            <th scope="col">Payment Status</th>
+            <th scope="col">Payment Amount</th>
+            <th scope="col">Pay</th>
+          </tr>
+        </thead>
+       
+        <tbody >
+          <tr *ngFor="let payment of payments; index as i">
+            <td style="display:none;">{{ payment.paymentId}}</td>
+            <td>{{ payment.paymentDate }}</td>
+            <td>{{ payment.principalAmount | number }}</td>
+            <td>{{ payment.InterestExtimate | number }}</td>
+            <td>
+              <span [ngClass]="getStatus(payment.paymentStatus)">{{ payment.paymentStatus}}</span>
+            </td>
+            <td>{{ payment.paymentAmount | number }}</td>
+            <td   >
+              <button class="btn btn-primary" (click)="changePaymentStatus($event,payment.paymentId)">Pay</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>

@@ -1,0 +1,49 @@
+
+<div class="container">
+  <div class="inf-content">
+          <div class="col-md-12">
+              <strong class="text-center">YOUR DETAILS</strong><br>
+                <form>
+                  <mat-spinner *ngIf="spin"></mat-spinner>
+                  <div *ngIf="!spin">
+                  <div class="row">
+                    <div class="col-sm pt-4">
+                      <div class="form-group">
+                        <strong>Customer ID</strong>
+                        <input type="text" formControlName="customerId" class="form-control" />
+                    </div>
+                    </div>
+                    <div class="col-sm pt-4">
+                      <div class="form-group">
+                        <strong>Name</strong>
+                        <input type="text" formControlName="name" class="form-control" />
+                    </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm">
+                      <div class="form-group">
+                        <strong>phone Number</strong>
+                        <input type="text" formControlName="phone" class="form-control" />
+                    </div>
+                    </div>
+                    <div class="col-sm">
+                      <div class="form-group">
+                        <strong>Email</strong>
+                        <input type="email" formControlName="email" class="form-control" />
+                    </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm">
+                      <div class="form-group">
+                        <strong>AccountNumber</strong>
+                        <input type="number" formControlName="accountNumber" class="form-control" />
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                </form>
+              </div>
+          </div>
+      </div>                        
