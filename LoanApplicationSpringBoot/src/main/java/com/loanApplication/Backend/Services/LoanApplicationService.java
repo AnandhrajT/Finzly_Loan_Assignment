@@ -13,6 +13,8 @@ import com.loanApplication.Backend.Repository.EmiRepository;
 import com.loanApplication.Backend.Repository.LoanApplicationRepository;
 import com.loanApplication.Backend.Repository.LoanRepository;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -74,12 +76,26 @@ public class LoanApplicationService {
 		return loanRepository.save(loan);
 	}
 
-	public LoanModel saveLoan(LoanModel loanModel) throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		loanModel.setInterestExtimate(10);
+//	public LoanModel saveLoan(LoanModel loanModel) throws CloneNotSupportedException {
+//		// TODO Auto-generated method stub
+//		loanModel.setInterestExtimate(10);
+//		loanModel.setPayment(false);
+//		loanModel.setLoanId(generateKey("loanId"));
+//		createPaymentSchedule((LoanModel)loanModel);
+//		logger.info("Loan Applied", loanModel);
+//		return loanRepository.save(loanModel);
+//
+//	}
+	
+	public LoanModel saveLoan(LoanModel loanModel) {
+
 		loanModel.setPayment(false);
-		loanModel.setLoanId(generateKey("loanId"));
-		createPaymentSchedule((LoanModel)loanModel);
+		loanModel.setLoanId(generateKey("LoanId"));
+		try {
+			createPaymentSchedule((LoanModel) loanModel.clone());
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
 		logger.info("Loan Applied", loanModel);
 		return loanRepository.save(loanModel);
 
@@ -87,6 +103,7 @@ public class LoanApplicationService {
 	
 	private void createPaymentSchedule(LoanModel loan) {
 		String paymentTerm = loan.getPaymentTerm();
+		loan.setPaymentTerm("Even Principal");
 		if (paymentTerm.equals("Interest Only")) {
 			createInterestOnlySchedule(loan);
 		} else if (paymentTerm.equals("Even Principal")) {
@@ -149,17 +166,11 @@ public class LoanApplicationService {
 	}
 
 	
-	private String calculatePaymentDate(LoanModel loan, String paymentInterval) {
+	private Date calculatePaymentDate(LoanModel loan, String paymentInterval) {
 		// TODO Auto-generated method stub
 		String paymentDate = null;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		Date date = null;
-		try {
-			date = formatter.parse(loan.getStartDate());
-		} catch (java.text.ParseException e) {
-			e.printStackTrace();
-		}
-
 		Calendar paymentDateCalenar = Calendar.getInstance();
 		paymentDateCalenar.setTime(date);
 		switch (paymentInterval) {
@@ -184,11 +195,23 @@ public class LoanApplicationService {
 
 		}
 		paymentDate = convertDateFormat(paymentDate);
-		loan.setStartDate(paymentDate);
-		return paymentDate;
+		
+		Date paymentPaydate = null;
+		try {
+			paymentPaydate = formatter.parse(paymentDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		loan.setStartDate(paymentPaydate);
+		return paymentPaydate;
 	}
 
 	
+	private Date convertDateFormat(Date paymentDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private String convertDateFormat(String paymentDate) {
 		// TODO Auto-generated method stub
 		if (paymentDate.charAt(1) == '-') {
@@ -218,7 +241,4 @@ public class LoanApplicationService {
 			logger.info("Getting loan details for existing customer {}", customerId);
 			return loans;
 	}
-
-
-
 	}
