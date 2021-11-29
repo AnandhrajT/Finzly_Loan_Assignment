@@ -1,9 +1,13 @@
 package com.loanApplication.Backend.Model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table
@@ -15,7 +19,8 @@ public class EmiModel {
 	@Column
 	private String loanId;
 	@Column
-	private String paymentDate;
+	@JsonFormat(pattern="dd-MM-yyyy")
+	private Date paymentDate;
 	@Column
 	private int principalAmount;
 	@Column
@@ -37,10 +42,10 @@ public class EmiModel {
 	public void setLoanId(String loanId) {
 		this.loanId = loanId;
 	}
-	public String getPaymentDate() {
+	public Date getPaymentDate() {
 		return paymentDate;
 	}
-	public void setPaymentDate(String paymentDate) {
+	public void setPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 	public int getPrincipalAmount() {
